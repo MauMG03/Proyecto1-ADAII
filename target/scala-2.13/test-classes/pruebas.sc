@@ -17,26 +17,16 @@ val A = Vector(
   ("e5",Vector(("M1",3),("M2",2)))
 )
 
-/*
-insatisfaccion(E(0),A(0))
-insatisfaccion(E(1),A(1))
-insatisfaccion(E(2),A(2))
-insatisfaccion(E(3),A(3))
-insatisfaccion(E(4),A(4))
-*/
 
 var sum = 0.0
+var num = 1
 
 for(i <- 0 to 4){
   sum += insatisfaccion(E(i),A(i))
+  num += 1
   println(sum)
 }
 
-sum/5
+sum/num
 
 instTotal(E,A)
-
-val e1 = ("e1",Set(("M1",5),("M2",2),("M3",1)))
-val a1 = ("e1",Set(("M1",5),("M2",2)))
-
-//insatisfaccion(e1,a1)
