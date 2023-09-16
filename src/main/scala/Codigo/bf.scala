@@ -250,6 +250,16 @@ object Bf {
 
         // Example
         
+        /**
+            * The columns represent the students and the rows the subjects or courses.
+            * An intersection Pjl is the priority  given by student j to subject l. 
+            * Pjl = 0 is interpreted as: student j didn't request quota for subject l.
+               E1  E2 E3 E4
+            M1 P11 P12 ...
+            M2 ....
+            M3 ...
+        */
+
         val b = Array(
             5, 4, 0, 2, 3,
             2, 1, 3, 0, 2,
@@ -258,6 +268,9 @@ object Bf {
 
         val d = solve_quota_distribution_bf(b, Array(3, 4, 2), 3, 5);
 
+
+        // Keeping in mind the priority_matrix's schema (b), an 1 means that the student is registered
+        // in the subject and a zero is the opposite
         print_arr_as_matrix(d, 5);
         
     }
