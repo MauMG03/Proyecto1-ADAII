@@ -248,6 +248,8 @@ object Bf {
 
         }
 
+        // Example
+        
         val b = Array(
             5, 4, 0, 2, 3,
             2, 1, 3, 0, 2,
