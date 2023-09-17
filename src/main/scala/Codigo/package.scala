@@ -49,12 +49,12 @@ package object Codigo {
   //Fuerza Bruta
 
   /*
-      * genStCombination
-      * e -> V
-      * Recibe un estudiante y el conjunto de materias solicitadas, y da como respuesta
-      * todos los posibles conjuntos de las materias solicitadas. Complejidad O(2^n) con
-      * n las materias solicitadas, 0 <= n <= 7
-       */
+   * genStCombination
+   * e -> V
+   * Recibe un estudiante y el conjunto de materias solicitadas, y da como respuesta
+   * todos los posibles conjuntos de las materias solicitadas. Complejidad O(2^n) con
+   * n las materias solicitadas, 0 <= n <= 7
+   */
   def genStCombination(e:Estudiante):Vector[Estudiante] = {
     if(e._2.isEmpty) Vector((e._1,Vector()))
     else{
@@ -65,12 +65,12 @@ package object Codigo {
   }
 
   /*
-        * genCombination
-        * E -> V
-        * Recibe E, un grupo de estudiantes con las materias solicitadas representado como
-        * vector y da como respuesta todas las formas posibles de asignar materias a los
-        * estudiantes. Complejidad O(128^r) con r la cantidad de estudiantes.
-         */
+   * genCombination
+   * E -> V
+   * Recibe E, un grupo de estudiantes con las materias solicitadas representado como
+   * vector y da como respuesta todas las formas posibles de asignar materias a los
+   * estudiantes. Complejidad O(128^r) con r la cantidad de estudiantes.
+   */
   def genCombinations(E:Vector[Estudiante]): Vector[Vector[Estudiante]] = {
     if(E.isEmpty) Vector(Vector())
     else{
@@ -80,13 +80,13 @@ package object Codigo {
   }
 
   /*
-          * genCombination
-          * mat X a -> Boolean
-          * Dado un grupo de materias con sus respectivos cupos y una posible asignacion
-          * de materias a los estudiantes, se da como respuesta si la asignacion es
-          * factible o no en terminos de cupos. Complejidad O(k + 7^r) donde m es la
-          * cantidad de materias y r la cantidad de estudiantes.
-           */
+   * genCombination
+   * mat X a -> Boolean
+   * Dado un grupo de materias con sus respectivos cupos y una posible asignacion
+   * de materias a los estudiantes, se da como respuesta si la asignacion es
+   * factible o no en terminos de cupos. Complejidad O(k + 7^r) donde m es la
+   * cantidad de materias y r la cantidad de estudiantes.
+   */
   def isFeasible(mat:Materias, a:Asignacion): Boolean = {
     var sol = true
     val cupos = mutable.Map[Int,Int]()
@@ -108,13 +108,13 @@ package object Codigo {
   }
 
   /*
-            * rocFB
-            * k X r X M X E -> (A,d)
-            * Dado "k" cantidad de materias, "r" cantidad de estudiantes, "M" el grupo de materias
-            * con sus respectivos cupos y "E" el grupo de estudiantes con las materias que solicitan
-            * da como respuesta una asignacion de materias "a" tal que la insatisfaccion "d" es la menor
-            * posible. Complejidad O(128^r)
-             */
+   * rocFB
+   * k X r X M X E -> (A,d)
+   * Dado "k" cantidad de materias, "r" cantidad de estudiantes, "M" el grupo de materias
+   * con sus respectivos cupos y "E" el grupo de estudiantes con las materias que solicitan
+   * da como respuesta una asignacion de materias "a" tal que la insatisfaccion "d" es la menor
+   * posible. Complejidad O(128^r)
+   */
   def rocFB(k:Int, r:Int, M:Materias, E:Vector[Estudiante]): (Asignacion,Double) = {
     val combinations = genCombinations(E)
 
