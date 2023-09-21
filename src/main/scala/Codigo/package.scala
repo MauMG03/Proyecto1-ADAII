@@ -83,19 +83,9 @@ package object Codigo {
    */
   def isFeasible(mat:Materias, a:Asignacion): Boolean = {
     val cupos = mutable.Map[Int,Int]()
-
-    for(m <- mat){
-      cupos(m._1) = m._2
-    }
-
-    for(e <- a; m <- e._2){
-      cupos(m._1) -= 1
-    }
-
-    for(c <- cupos){
-      if(c._2 < 0) return false
-    }
-
+    for(m <- mat) cupos(m._1) = m._2
+    for(e <- a; m <- e._2) cupos(m._1) -= 1
+    for(c <- cupos) if(c._2 < 0) return false
     true
   }
 
