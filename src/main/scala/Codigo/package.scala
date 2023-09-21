@@ -20,11 +20,7 @@ package object Codigo {
    */
   def insatisfaccion(e:Estudiante, a:Estudiante): Double = {
     var sum = 0.0
-    for(s <- e._2) {
-      if(!a._2.contains(s)) {
-        sum += s._2
-      }
-    }
+    for(s <- e._2; if(!a._2.contains(s))) sum += s._2
     (1.0 - (a._2.size.toDouble / e._2.size.toDouble)) * (sum / gamma(e._2.size))
   }
 
@@ -36,17 +32,15 @@ package object Codigo {
     * Los elementos de ambos vectores corresponden, es decir, el estudiante e1 esta en la misma
     * posicion tanto en est como en a. La salida es la insatisfaccion total del problema.
      */
-  def instTotal(est:Vector[Estudiante], a:Asignacion): Double = {
+  def instTotal(est:Vector[Estudiante], a:Asignacion,r:Double): Double = {
     var sum = 0.0
-    for(i <- est.indices) {
-      sum += insatisfaccion(est(i),a(i))
-    }
-    sum/est.size.toDouble
+    for(j <- est.indices) sum += insatisfaccion(est(j),a(j))
+    sum/r
   }
 
   //-------------------------------------- SOLUCIONES ---------------------------------------
 
-  //Fuerza Bruta
+  // ---------------------------------------- FUERZA BRUTA ---------------------------------
 
   /*
    * genStCombination
@@ -88,11 +82,9 @@ package object Codigo {
    * cantidad de materias y r la cantidad de estudiantes.
    */
   def isFeasible(mat:Materias, a:Asignacion): Boolean = {
-    var sol = true
     val cupos = mutable.Map[Int,Int]()
 
     for(m <- mat){
-      // Crear asociacion con llave Mi y valor mi
       cupos(m._1) = m._2
     }
 
@@ -101,10 +93,10 @@ package object Codigo {
     }
 
     for(c <- cupos){
-      if(c._2 < 0) sol = false
+      if(c._2 < 0) return false
     }
 
-    sol
+    true
   }
 
   /*
@@ -115,14 +107,13 @@ package object Codigo {
    * da como respuesta una asignacion de materias "a" tal que la insatisfaccion "d" es la menor
    * posible. Complejidad O(128^r)
    */
-  def rocFB(k:Int, r:Int, M:Materias, E:Vector[Estudiante]): (Asignacion,Double) = {
+  def rocFB(k:Double, r:Double, M:Materias, E:Vector[Estudiante]): (Asignacion,Double) = {
     val combinations = genCombinations(E)
-
     var sol:Asignacion = Vector()
     var cost:Double = Double.MaxValue
-    
-    for(comb <- combinations; if(isFeasible(M,comb))){
-      val insatisfaction = instTotal(E,comb)
+
+    for(comb <- combinations; if(isFeasible(M,comb))) {
+      val insatisfaction = instTotal(E,comb,r)
       if(insatisfaction < cost){
         cost = insatisfaction
         sol = comb
@@ -131,4 +122,10 @@ package object Codigo {
 
     (sol,cost)
   }
+
+  //----------------------------------- PROGRAMACION VORAZ ------------------------------------
+
+
+
+  //----------------------------------- PROGRAMACION DINAMICA ------------------------------------
 }

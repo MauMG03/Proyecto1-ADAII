@@ -1,4 +1,5 @@
 import Codigo._
+import FileIO.{readFile, writeFile}
 
 val M = Vector((1001,3),(1002,4),(1003,2))
 val E = Vector(
@@ -50,4 +51,8 @@ instTotal(E,A)*/
 //isFeasible(M,A)
 
 // Para este algoritmo es irrelevante el uso de r y k.
-rocFB(3,5,M,E)
+
+val archivo = "e_3_10_5.roc"
+
+val e = readFile("C:\\Users\\mauricio.munoz\\Desktop\\Univalle\\Semestre VI\\ADA II\\Proyecto 1\\Proyecto1\\src\\main\\scala\\Archivos\\Entradas\\" + archivo)
+writeFile(rocFB(e._1,e._2,e._3,e._4), "r" + archivo)
