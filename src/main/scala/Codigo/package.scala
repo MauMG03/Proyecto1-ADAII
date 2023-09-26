@@ -115,7 +115,83 @@ package object Codigo {
 
   //----------------------------------- PROGRAMACION VORAZ ------------------------------------
 
+/*
+   * calcPeso
+   * [E] -> [E]
+   * Dada una entrada de "n" estudiantes "E" se calcula el peso de cada materia "m" en la solicitud de un
+   * Estudiante como: Prioridad / PrioridadTotal * 100%
+   * Complejidad O(2*n*m)
+   */
 
+  def calcPeso(e: Vector[Estudiante]): Vector[Estudiante] = {
+    // Se calcula la suma de los valores de prioridad para cada estudiante
+    val sumMap = e.map { case (_, solicitud) =>
+      val sum = solicitud.map(_._2).sum.toDouble
+      sum
+    }
+
+    // Se calcula el porcentaje de prioridad de cada materia, y se retorna el vector de estudiantes modificado
+    e.zip(sumMap).map { case ((key, solicitud), sum) =>
+      val SolicitudNormalizada = solicitud.map { case (subKey, value) =>
+        (subKey, (value.toDouble / sum * 100).toInt)
+      }
+      (key, SolicitudNormalizada)
+    }
+  }
+
+  /*
+   * sortEstudiantes
+   * [E] x id -> [E]
+   * Toma un vector de Estudiantes previamente normalizado por peso, se confirma que el estudiante
+   * haya solicitado la materia al comparar el codigo "id" de esta, y teniendo en cuenta
+   * que el rango del peso es de 0 a 100, se aplica radixSort con 2 digitos, y se retorna
+   * un vector de Estudiantes ordenado por peso, que contiene solamente los estudiantes que hayan solicitado
+   * la materia con el id ingresado
+   *
+   * Complejidad O(2*n*m)
+   */
+  def sortEstudiantes(normE: Vector[Estudiante], idToSortBy: Int): Vector[Estudiante] = {
+
+    // Se define la funcion para obtener el nesimo digito del numero
+    def getDigit(num: Int, digit: Int): Int = {
+      (num / Math.pow(10, digit).toInt) % 10
+    }
+    //Se realiza radix sort para 2 digitos
+    var students = normE
+    for (digit <- 1 to 2) {
+      val buckets = Array.fill(10)(Vector.empty[Estudiante])
+
+      students.foreach { case (key, solicitud) =>
+        solicitud.find { case (id, _) => id == idToSortBy } match {
+          case Some((_, peso)) =>
+            val currentDigit = getDigit(peso, digit - 1)
+            buckets(currentDigit) :+= (key, solicitud)
+          case None =>
+        }
+      }
+
+      students = buckets.reverse.flatten.toVector
+    }
+
+    students
+  }
+
+  /*
+   * asignarMateria
+   * int x (int, [int]) x [E] -> (int, [int])
+   * recibe la cantidad de cupos de una materia, un resultado inicial que contiene el codigo
+   * de la materia y un vector inicialmente vacio, y un vector previamente ordenado por peso
+   * de estudiantes que solicitaron la materia, y devuleve un vector de la forma
+   * (CodigoMateria, (Codigos de los estudiantes a la que se le asigno))
+   */
+  def asignarMateria(cupos: Int, result: Vector[(Int, Vector[Int])], e: Vector[Estudiante]): Vector[(Int, Vector[Int])] = {
+    if (e.isEmpty | cupos == 0) {
+      result
+    } else {
+      val newRes: Vector[(Int, Vector[Int])] = result.updated(0, (result(0)._1, result(0)._2 :+ e.head._1))
+      asignarMateria(cupos - 1, newRes, e.tail)
+    }
+  }
 
   //----------------------------------- PROGRAMACION DINAMICA ------------------------------------
 }
