@@ -146,16 +146,14 @@ package object Codigo {
    * sortEstudiantes
    * [E] x id -> [E]
    * Toma un vector de Estudiantes previamente normalizado por peso, se confirma que el estudiante
-   * haya solicitado la materia al comparar el codigo "id" de esta, y teniendo en cuenta
-   * que el rango del peso es de 0 a 100, se aplica radixSort con 2 digitos, y se retorna
-   * un vector de Estudiantes ordenado por peso, que contiene solamente los estudiantes que hayan solicitado
-   * la materia con el id ingresado
+   * haya solicitado la materia al comparar el codigo "id" de esta, y se ordena el vector de acuerdo
+   * al peso de la materia mediante sortby
    *
-   * Complejidad O(2*n*m)
+   * Complejidad O(n+n*log n)
    */
   def sortEstudiantes(estudiantes: Vector[EstudiantePeso], id: Int): Vector[EstudiantePeso] = {
     val sortedEstudiantes = estudiantes.filter { case (_, solicitud) =>
-      solicitud.exists { case (solicitudId, _) => solicitudId == id }
+      solicitud.exists { case (solicitudId, _) => solicitudId == id } //Comprueba que el estudiante haya inscrito la materia
     }.sortBy { case (_, solicitud) =>
       solicitud.find { case (solicitudId, _) => solicitudId == id }.get._2
     }(Ordering[Double].reverse)
@@ -180,7 +178,7 @@ package object Codigo {
     }
   }
 
-  def calcAsign(e:Vector[Estudiante], m:Materias): Asignacion = {
+  def rocVP(k:Double, r:Double, m:Materias, e:Vector[Estudiante]): (Double, Asignacion) = {
     val normE = calcPeso(e)
     var result = e
     m.foreach { case(mId, c) =>
@@ -196,7 +194,7 @@ package object Codigo {
       }
 
     }
-    result
+    (instTotal(e, result, r), result)
   }
 
   //----------------------------------- PROGRAMACION DINAMICA ------------------------------------
