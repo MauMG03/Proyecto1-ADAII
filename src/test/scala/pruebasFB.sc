@@ -1,4 +1,4 @@
-import Codigo._
+import rocFB._
 import FileIO.{readFile, writeFile}
 
 val M = Vector((1001,3),(1002,4),(1003,2))
@@ -36,7 +36,7 @@ instTotal(E,A)*/
 //Probando algoritmos de combinaciones
 
 //se debe dar 2^k combinaciones
-//genStCombination(E(0)._1,E(0)._2)
+genStCombination(E(0)._1,E(0)._2)
 
 // La cantidad debe ser equivalente a la multiplicacion de las
 // combinaciones de materias asignadas por cada estudiante.
@@ -52,7 +52,7 @@ instTotal(E,A)*/
 
 // Para este algoritmo es irrelevante el uso de r y k.
 
-val archivo = "e_3_10_5.roc"
+val archivo = "e_3_20_10.roc"
 
 val e = readFile("C:\\Users\\mauricio.munoz\\Desktop\\Univalle\\Semestre VI\\ADA II\\Proyecto 1\\Proyecto1\\src\\main\\scala\\Archivos\\Entradas\\" + archivo)
 writeFile(rocFB(e._1,e._2,e._3,e._4), "r" + archivo)

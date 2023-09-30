@@ -1,3 +1,0 @@
-import FileIO._
-
-writeFile()
