@@ -1,3 +1,4 @@
+import scala.collection.immutable.Vector
 import scala.collection.mutable
 
 package object Codigo {
@@ -7,6 +8,8 @@ package object Codigo {
   type Solicitud = Vector[(Int,Int)] // (sjl,pjl)
   type Estudiante = (Int,Solicitud) // (ei, msi) o (ei, mai)
   type Asignacion = Vector[Estudiante] // puede ser E (una de las entradas del problema) o A (la salida)
+  type SolicitudPeso = Vector[(Int, Double)]
+  type EstudiantePeso = (Int, SolicitudPeso)
 
 
   def gamma(x:Double) : Double = (3*x)-1
@@ -115,7 +118,7 @@ package object Codigo {
 
   //----------------------------------- PROGRAMACION VORAZ ------------------------------------
 
-/*
+  /*
    * calcPeso
    * [E] -> [E]
    * Dada una entrada de "n" estudiantes "E" se calcula el peso de cada materia "m" en la solicitud de un
@@ -123,7 +126,7 @@ package object Codigo {
    * Complejidad O(2*n*m)
    */
 
-  def calcPeso(e: Vector[Estudiante]): Vector[Estudiante] = {
+  def calcPeso(e: Vector[Estudiante]): Vector[(Int, Vector[(Int, Double)])] = {
     // Se calcula la suma de los valores de prioridad para cada estudiante
     val sumMap = e.map { case (_, solicitud) =>
       val sum = solicitud.map(_._2).sum.toDouble
@@ -133,7 +136,7 @@ package object Codigo {
     // Se calcula el porcentaje de prioridad de cada materia, y se retorna el vector de estudiantes modificado
     e.zip(sumMap).map { case ((key, solicitud), sum) =>
       val SolicitudNormalizada = solicitud.map { case (subKey, value) =>
-        (subKey, (value.toDouble / sum * 100).toInt)
+        (subKey, value.toDouble / sum )
       }
       (key, SolicitudNormalizada)
     }
@@ -150,30 +153,14 @@ package object Codigo {
    *
    * Complejidad O(2*n*m)
    */
-  def sortEstudiantes(normE: Vector[Estudiante], idToSortBy: Int): Vector[Estudiante] = {
+  def sortEstudiantes(estudiantes: Vector[EstudiantePeso], id: Int): Vector[EstudiantePeso] = {
+    val sortedEstudiantes = estudiantes.filter { case (_, solicitud) =>
+      solicitud.exists { case (solicitudId, _) => solicitudId == id }
+    }.sortBy { case (_, solicitud) =>
+      solicitud.find { case (solicitudId, _) => solicitudId == id }.get._2
+    }(Ordering[Double].reverse)
 
-    // Se define la funcion para obtener el nesimo digito del numero
-    def getDigit(num: Int, digit: Int): Int = {
-      (num / Math.pow(10, digit).toInt) % 10
-    }
-    //Se realiza radix sort para 2 digitos
-    var students = normE
-    for (digit <- 1 to 2) {
-      val buckets = Array.fill(10)(Vector.empty[Estudiante])
-
-      students.foreach { case (key, solicitud) =>
-        solicitud.find { case (id, _) => id == idToSortBy } match {
-          case Some((_, peso)) =>
-            val currentDigit = getDigit(peso, digit - 1)
-            buckets(currentDigit) :+= (key, solicitud)
-          case None =>
-        }
-      }
-
-      students = buckets.reverse.flatten.toVector
-    }
-
-    students
+    sortedEstudiantes
   }
 
   /*
@@ -184,13 +171,32 @@ package object Codigo {
    * de estudiantes que solicitaron la materia, y devuleve un vector de la forma
    * (CodigoMateria, (Codigos de los estudiantes a la que se le asigno))
    */
-  def asignarMateria(cupos: Int, result: Vector[(Int, Vector[Int])], e: Vector[Estudiante]): Vector[(Int, Vector[Int])] = {
+  def asignarMateria(cupos: Int, result: Vector[(Int, Vector[Int])], e: Vector[EstudiantePeso]): Vector[(Int, Vector[Int])] = {
     if (e.isEmpty | cupos == 0) {
       result
     } else {
       val newRes: Vector[(Int, Vector[Int])] = result.updated(0, (result(0)._1, result(0)._2 :+ e.head._1))
       asignarMateria(cupos - 1, newRes, e.tail)
     }
+  }
+
+  def calcAsign(e:Vector[Estudiante], m:Materias): Asignacion = {
+    val normE = calcPeso(e)
+    var result = e
+    m.foreach { case(mId, c) =>
+      val sorted = sortEstudiantes(normE, mId)
+      val init:Vector[(Int,Vector[Int])] = Vector((mId,Vector.empty[Int]))
+      val a = asignarMateria(c, init, sorted)
+      result = result.map { case (estudiante, asignaciones) =>
+        if (!a.head._2.contains(estudiante)) {
+          (estudiante, asignaciones.filter { case (key, _) => key != a.head._1 })
+        } else {
+          (estudiante, asignaciones)
+        }
+      }
+
+    }
+    result
   }
 
   //----------------------------------- PROGRAMACION DINAMICA ------------------------------------
