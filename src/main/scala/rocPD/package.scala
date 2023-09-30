@@ -90,11 +90,12 @@ package object rocPD {
     * se calcula el valor.
     * Complejidad alrededor de O(cˆk * r * k)
     * */
-    def memoizedROC(n: Int, j: Int, matrix: ArrayBuffer[ArrayBuffer[Option[Double]]]): Double = {
+    def memoizedROC(n: Int, j: Int, matrix: ArrayBuffer[ArrayBuffer[(Option[Estudiante],Option[Double])]]): Double = {
       matrix(n)(j) match {
-        case Some(value) => value
-        case None => {
+        case (a,Some(value)) => value
+        case (_,None) => {
           var min = Double.MaxValue
+          var asig:Option[Estudiante] = None
           val assignations_j = genStCombination(E(j-1))
 
           for(a <- assignations_j){
@@ -104,11 +105,14 @@ package object rocPD {
             if(verificarCupos(reduced_quota)){
               val newN = vToN(k.toInt, reduced_quota, Ii)
               val q = ((memoizedROC(newN, j - 1, matrix) * (j - 1)) + insatisfaccion(E(j-1), a)) * (1 / j.toDouble)
-              if (q < min) min = q
+              if (q < min) {
+                min = q
+                asig = Some(a)
+              }
             }
 
           }
-          matrix(n)(j) = Some(min)
+          matrix(n)(j) = (asig,Some(min))
           min
         }
       }
@@ -119,22 +123,38 @@ package object rocPD {
     * asigna los valores en los casos base (j=0) y ejecuta la solucion de un determinado subproblema.
     * Complejidad alrededor de O(cˆk * r * k)
     * */
-    def costRocPD(n: Int, j: Int): ArrayBuffer[ArrayBuffer[Option[Double]]] = {
-      val matrix: ArrayBuffer[ArrayBuffer[Option[Double]]] = ArrayBuffer.fill(n+1, j+1)(None)
+    def costRocPD(n: Int, j: Int): ArrayBuffer[ArrayBuffer[(Option[Estudiante],Option[Double])]] = {
+      val matrix: ArrayBuffer[ArrayBuffer[(Option[Estudiante],Option[Double])]] = ArrayBuffer.fill(n+1, j+1)(None,None)
 
-      for (i <- 0 to n) matrix(i)(0) = Some(0.0)
+      for (i <- 0 to n) matrix(i)(0) = (None,Some(0.0))
       memoizedROC(n, j, matrix)
       matrix
     }
 
-    //Se guarda la matriz para recuperar el valor
-    val matrix = costRocPD(vToN(k.toInt,cupos,Ii),r.toInt)
-    //val matrix = costRocPD(2,5)
-    //for(m <- matrix) println(m)
+    /*
+    * Funcion para obtener la solucion optima al problema roc usando programacion dinamica,
+    * recibe el entero que representa el vector de cupos, la cantidad de estudiantes a asignarle
+    * tales cupos y la matriz de costo y asignacion.
+    * Complejidad alrededor de O(j*k)
+    * */
+    def solRocPD(n: Int, j: Int, matrix: ArrayBuffer[ArrayBuffer[(Option[Estudiante],Option[Double])]]): Asignacion = {
+      matrix(n)(j) match {
+        case (None,Some(value)) => {
+          Vector()
+        }
+        case (Some(a),Some(value)) => {
+          val actual_quota = nToV(k.toInt, n, Ii)
+          val reduced_quota = reducirCupos(actual_quota, a, M)
+          val newN = vToN(k.toInt, reduced_quota, Ii)
 
-    //Se imprime el valor del costo de la solucion.
-    println(matrix(vToN(k.toInt,cupos,Ii))(r.toInt))
+          solRocPD(newN, j-1, matrix) :+ a
+        }
+      }
+    }
 
-    (Vector(),1.0)
+    val maxN = vToN(k.toInt,cupos,Ii)
+    val matrix = costRocPD(maxN,r.toInt)
+
+    (solRocPD(maxN,r.toInt,matrix),matrix(maxN)(r.toInt)._2.get)
   }
 }
