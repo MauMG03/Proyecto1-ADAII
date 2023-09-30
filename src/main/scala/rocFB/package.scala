@@ -1,6 +1,6 @@
 import scala.collection.mutable
 
-package object Codigo {
+package object rocFB {
 
   // Definicion de tipos de datos
   type Materias = Vector[(Int,Int)] // (Mi, mi)
@@ -38,7 +38,7 @@ package object Codigo {
     sum/r
   }
 
-  //-------------------------------------- SOLUCIONES ---------------------------------------
+  //-------------------------------------- SOLUCION ---------------------------------------
 
   // ---------------------------------------- FUERZA BRUTA ---------------------------------
 
@@ -112,10 +112,4 @@ package object Codigo {
 
     (sol,cost)
   }
-
-  //----------------------------------- PROGRAMACION VORAZ ------------------------------------
-
-
-
-  //----------------------------------- PROGRAMACION DINAMICA ------------------------------------
 }

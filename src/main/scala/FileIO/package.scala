@@ -1,5 +1,5 @@
 import java.io.{BufferedReader, File, FileReader, FileWriter, IOException, PrintWriter}
-import Codigo._
+import rocFB._
 
 package object FileIO {
   def writeFile(s:(Asignacion, Double),n:String): Unit = {
