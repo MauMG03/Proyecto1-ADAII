@@ -2,17 +2,18 @@ import scalafx.application.JFXApp3
 import scalafx.event.ActionEvent
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.VBox
+import scalafx.scene.layout.{GridPane, VBox}
+import scalafx.scene.paint.Color
 import scalafx.scene.control.ComboBox
 import scalafx.Includes._
-import scalafx.stage.{FileChooser, DirectoryChooser}
-
+import scalafx.stage.{DirectoryChooser, FileChooser}
+import scalafx.geometry.{Insets, Pos}
 import rocFB.rocFB
 import rocPD.rocPD
-
-import FileIO.{writeFile, readFile}
-
-import java.nio.file.{Paths, Path}
+import FileIO.{readFile, writeFile}
+import scalafx.scene.paint.Color._
+import scalafx.scene.paint._
+import scalafx.scene.text.Text
 
 
 
@@ -20,8 +21,19 @@ object GUI extends JFXApp3 {
   override def start(): Unit = {
     stage = new JFXApp3.PrimaryStage {
       title = "REPARTICION OPTIMA DE CUPOS"
-      scene = new Scene(800, 600) {
 
+      scene = new Scene(width = 400,height = 600) {
+        fill = Color.rgb(236, 215, 198)
+
+      resizable = false;
+
+      val txt = new Text {
+        text = "ROC"
+        style = "-fx-font: normal bold 50pt sans-serif"
+        fill = new LinearGradient(
+          endX = 0,
+          stops = Stops(Red, DarkRed))
+      }
 
         val algorithmTypeLabel = new Label("Seleccione el tipo de algoritmo");
         val comboBoxItems = List("Fuerza Bruta", "Voraz", "Dinamico");
@@ -32,7 +44,7 @@ object GUI extends JFXApp3 {
         val inputFileButton = new Button("Seleccionar");
         val selectedInputFileLabel = new Label("Ninguno");
 
-        val outputDirLabel = new Label("Seleccione un directorio donde se crearan las salidas");
+        val outputDirLabel = new Label("Directorio de salidas");
         val outputDirButton = new Button("Seleccionar");
         val selectedOutputDirLabel = new Label("Ninguno");
 
@@ -41,6 +53,21 @@ object GUI extends JFXApp3 {
         executeProgramButton.disable = true;
 
         val executionResultLabel = new Label("");
+
+        val txtVBox = new VBox(5, txt);
+
+        val strategyPickVBox = new VBox(5, algorithmTypeLabel, algorithmTypeComboBox);
+
+        val inputVBox = new VBox(5, inputFileLabel, inputFileButton,
+          selectedInputFileLabel);
+
+        val outputVBox = new VBox(5, outputDirLabel, outputDirButton,
+          selectedOutputDirLabel);
+
+        val executionVBox = new VBox(5, executeProgramButton, executionResultLabel);
+
+
+
 
         inputFileButton.onAction = (e: ActionEvent) => {
           val fileChooser = new FileChooser;
@@ -103,9 +130,22 @@ object GUI extends JFXApp3 {
 
         }
 
-        content = new VBox(algorithmTypeLabel, algorithmTypeComboBox, inputFileLabel, inputFileButton,
-          selectedInputFileLabel, outputDirLabel, outputDirButton, selectedOutputDirLabel, executeProgramButton,
-          executionResultLabel);
+        txtVBox.layoutX = 80;
+        txtVBox.layoutY = 20;
+
+        strategyPickVBox.layoutX = 80;
+        strategyPickVBox.layoutY = 110;
+
+        inputVBox.layoutX = 80;
+        inputVBox.layoutY = 200;
+
+        outputVBox.layoutX = 80;
+        outputVBox.layoutY = 300;
+
+        executionVBox.layoutX = 80;
+        executionVBox.layoutY = 420;
+
+        content = List(txtVBox, strategyPickVBox, inputVBox, outputVBox, executionVBox);
 
       }
     }
