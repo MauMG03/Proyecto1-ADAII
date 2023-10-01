@@ -52,7 +52,9 @@ genStCombination(E(0)._1,E(0)._2)
 
 // Para este algoritmo es irrelevante el uso de r y k.
 
+/*
 val archivo = "e_3_20_10.roc"
 
 val e = readFile("C:\\Users\\mauricio.munoz\\Desktop\\Univalle\\Semestre VI\\ADA II\\Proyecto 1\\Proyecto1\\src\\main\\scala\\Archivos\\Entradas\\" + archivo)
 writeFile(rocFB(e._1,e._2,e._3,e._4), "r" + archivo)
+*/

@@ -27,9 +27,11 @@ val E = Vector(
 //rocPD(3,5,M,E)
 
 
-
+/*
 val archivo = "e_3_5_5.roc"
 val e = readFile("C:\\Users\\mauricio.munoz\\Desktop\\Univalle\\Semestre VI\\ADA II\\Proyecto 1\\Proyecto1\\src\\main\\scala\\Archivos\\Entradas\\" + archivo)
 rocFB(e._1,e._2,e._3,e._4)
 rocPD(e._1,e._2,e._3,e._4)
+*/
+
 
