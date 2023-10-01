@@ -1,11 +1,12 @@
 import FileIO._
 import Benchmark._
 import Codigo._
+import RocVP._
 
 // COLOQUE LA DIRECCION DONDE SE ENCUENTRAN SUS ARCHIVOS DE PRUEBA
 // Y EL ALGORITMO QUE DESEA PROBAR
-val directoryPath = "/home/juan/Universidad/Semestre VI/ADA II/Proyecto1/Proyecto1-ADAII/src/main/scala/Archivos/Entradas/"
-val algoritmo:AlgoritmoRoc = rocFB
+val directoryPath = "D:\\Universidad\\Semestre 5\\ADA2\\Proyecto1-ADAII\\src\\main\\scala\\Archivos\\Entradas"
+val algoritmo:AlgoritmoRoc = rocVP
 
 //DESCOMENTE ESTA SECCION SI DESEA REALIZAR TODAS LA PRUEBAS
 // Recuerde que rocFB se desborda
