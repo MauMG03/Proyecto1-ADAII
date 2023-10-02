@@ -49,4 +49,14 @@ package object FileIO {
 
     (k,r,M,E)
   }
+
+  def listFilesInDirectory(directoryPath: String): List[File] = {
+    val directory = new File(directoryPath)
+    if (directory.exists() && directory.isDirectory) {
+      directory.listFiles().toList
+    } else {
+      Nil
+    }
+  }
+
 }

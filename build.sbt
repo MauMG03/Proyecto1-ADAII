@@ -6,3 +6,4 @@ lazy val root = (project in file("."))
   .settings(
     name := "Proyecto1"
   )
+libraryDependencies += "com.storm-enroute" %% "scalameter-core" % "0.21"
