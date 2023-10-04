@@ -25,3 +25,4 @@ libraryDependencies ++= {
   Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
     .map(m => "org.openjfx" % s"javafx-$m" % "16" classifier osName)
 }
+libraryDependencies += "com.storm-enroute" %% "scalameter-core" % "0.21"
