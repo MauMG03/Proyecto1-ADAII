@@ -2,28 +2,26 @@ import scalafx.application.JFXApp3
 import scalafx.event.ActionEvent
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, ComboBox, Label, ScrollPane, Tab, TabPane, TableColumn, TableView, TextArea}
-import scalafx.scene.layout.{BorderPane, GridPane, TilePane, VBox}
+import scalafx.scene.layout.{VBox}
 import scalafx.scene.paint.Color
 import scalafx.Includes._
-import scalafx.stage.{DirectoryChooser, FileChooser, Modality, Screen, Stage}
-import scalafx.geometry.{Insets, Pos, Side}
+import scalafx.stage.{DirectoryChooser, FileChooser, Modality, Stage}
 import rocFB.{Asignacion, Estudiante, Materias, rocFB}
 import rocPD.rocPD
+import rocV.rocV
+import RocVP.rocVP
 import FileIO.{readFile, writeFile}
-import scalafx.beans.property.{ObjectProperty, StringProperty}
+import scalafx.beans.property.{ObjectProperty}
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.paint.Color._
 import scalafx.scene.paint._
 import scalafx.scene.text.Text
-import scalafx.stage.Stage.sfxStage2jfx
 
 
 
 object GUI extends JFXApp3 {
 
   def visualizationMenu(e:(Double, Double, Materias, Vector[Estudiante])):Unit = {
-
-    //val screenBounds = Screen.primary.visualBounds
     case class SubjectsQuota(code: Int, quota: Int)
 
     val dataSQ = ObservableBuffer[SubjectsQuota]()
@@ -187,7 +185,7 @@ object GUI extends JFXApp3 {
           style = "-fx-font: bold 10pt sans-serif"
         }
         val algorithmTypeLabel = new Label("Seleccione el tipo de algoritmo");
-        val comboBoxItems = List("Fuerza Bruta", "Voraz", "Dinamico");
+        val comboBoxItems = List("Fuerza Bruta", "Voraz V1", "Voraz V2", "Dinamico");
         val algorithmTypeComboBox = new ComboBox[String](comboBoxItems);
         algorithmTypeComboBox.selectionModel().select(0);
 
@@ -301,8 +299,10 @@ object GUI extends JFXApp3 {
 
             val sol = selectedStrategy match {
               case 0 => {strategyPrefix="fb";rocFB(e._1,e._2,e._3,e._4)}
-              case 2 => {strategyPrefix="pd";rocPD(e._1,e._2,e._3,e._4)}
-              case _ => {strategyPrefix="pd";rocPD(e._1,e._2,e._3,e._4)} // Placeholder
+              case 1 => {strategyPrefix="v1";rocV(e._1,e._2,e._3,e._4)}
+              case 2 => {strategyPrefix="v2";rocVP(e._1,e._2,e._3,e._4)}
+              case 3 => {strategyPrefix="pd";rocPD(e._1,e._2,e._3,e._4)}
+              case _ => throw new Exception("That strategy does not exist")
             }
 
             executionResultLabel.text = "Procesando...";
@@ -322,21 +322,6 @@ object GUI extends JFXApp3 {
           }
 
         }
-/*
-        txtVBox.layoutX = 80;
-        txtVBox.layoutY = 20;
-
-        strategyPickVBox.layoutX = 80;
-        strategyPickVBox.layoutY = 110;
-
-        inputVBox.layoutX = 80;
-        inputVBox.layoutY = 200;
-
-        outputVBox.layoutX = 80;
-        outputVBox.layoutY = 300;
-
-        executionVBox.layoutX = 80;
-        executionVBox.layoutY = 420;*/
 
 
         val mainVBox = new VBox (30, txtVBox, strategyPickVBox, inputVBox, outputVBox, executionVBox)
