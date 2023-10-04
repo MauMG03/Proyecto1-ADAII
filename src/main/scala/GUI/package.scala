@@ -305,8 +305,6 @@ object GUI extends JFXApp3 {
               case _ => {strategyPrefix="pd";rocPD(e._1,e._2,e._3,e._4)} // Placeholder
             }
 
-            visualizationMenuOutput(sol)
-
             executionResultLabel.text = "Procesando...";
 
             val outputPath = selectedOutputDirLabel.text()
@@ -314,6 +312,8 @@ object GUI extends JFXApp3 {
             val finalName = strategyPrefix + "_" + fileName
 
             writeFile(sol, outputPath, finalName);
+
+            visualizationMenuOutput(sol)
 
             executionResultLabel.text = "Ejecutado exitosamente";
 
