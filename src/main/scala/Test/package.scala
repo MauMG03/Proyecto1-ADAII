@@ -42,7 +42,6 @@ package object Test {
       sizeMs_j -= 1
       gamma_j -= p_jl
       pMax = gamma_j  - sizeMs_j + 1
-      println(pMax)
     }
 
     while (gamma_j > 5){
