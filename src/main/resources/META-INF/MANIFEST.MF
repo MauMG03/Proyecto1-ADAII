@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: Main
-Class-Path: scala-reflect-2.13.12.jar javafx-graphics-16-linux.jar javaf
- x-base-16-linux.jar javafx-controls-16.jar javafx-media-16-linux.jar ja
- vafx-fxml-16-linux.jar javafx-graphics-16.jar javafx-media-16.jar javaf
- x-controls-16-linux.jar javafx-base-16.jar javafx-swing-16-linux.jar sc
- alafx_2.13-16.0.0-R24.jar javafx-web-16-linux.jar scala-library-2.13.12
- .jar
-

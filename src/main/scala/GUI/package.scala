@@ -45,6 +45,7 @@ object GUI extends JFXApp3 {
 
     val visualizeInput = new Stage {
       title = "Visualizar Entrada"
+
       scene = new Scene  {
         val tabPane = new TabPane {
 
@@ -126,6 +127,7 @@ object GUI extends JFXApp3 {
   def visualizationMenuOutput(e:(Asignacion, Double)): Unit = {
     val visualizeOutput = new Stage {
       title = "Visualizar Salida"
+
       scene = new Scene {
         val tabPane = new TabPane {
 
@@ -155,7 +157,7 @@ object GUI extends JFXApp3 {
             subjectsPrioritiesTable.columns ++= List(subjectsPrioritiesTableCol1, subjectsPrioritiesTableCol2)
 
             val tabHeaderStudent = new Text {
-              text = "\n Viendo Estudiante " + i._1 + "\n" + "Desplazate usando las flechas <- y ->"
+              text = "\n El valor de la solución es " + e._2+ "\n Viendo Estudiante " + i._1 + "\n" + "Desplazate usando las flechas <- y ->"
               style = "-fx-font: bold 10pt sans-serif"
             }
 
