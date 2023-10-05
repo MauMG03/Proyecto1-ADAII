@@ -48,8 +48,9 @@ package object Test {
     while (gamma_j > 5){
       val i = rand.nextInt(list_p_jl.length)
       if (list_p_jl(i) < 5) {
-        list_p_jl(i) = list_p_jl(i) + 1
-        gamma_j -= 1
+        val p_max = 5 - list_p_jl(i)
+        list_p_jl(i) = list_p_jl(i) + p_max
+        gamma_j -= p_max
       }
     }
 
