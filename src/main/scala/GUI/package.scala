@@ -50,11 +50,19 @@ object GUI extends JFXApp3 {
 
           tabClosingPolicy = TabPane.TabClosingPolicy.Unavailable
 
+          val tabHeader = new Text {
+            text = "\n Viendo lista de materias \n Desplazate usando las flechas <- y ->"
+            style = "-fx-font: bold 10pt sans-serif"
+          }
+
+          val tabVBoxSubjects = new VBox(5, tabHeader, subjectsQuotaTable)
+
           val subjectsQuotaTab = new Tab {
             text = "Materias"
-            content = subjectsQuotaTable
-
+            content = tabVBoxSubjects
           }
+
+
 
           tabs = Seq(subjectsQuotaTab)
 
@@ -81,10 +89,16 @@ object GUI extends JFXApp3 {
 
             subjectsPrioritiesTable.columns ++= List(subjectsPrioritiesTableCol1, subjectsPrioritiesTableCol2)
 
+            val tabHeaderStudent = new Text {
+              text = "\n Viendo Estudiante " + i._1 + "\n" + "Desplazate usando las flechas <- y ->"
+              style = "-fx-font: bold 10pt sans-serif"
+            }
+
+            val tabVBox = new VBox(5, tabHeaderStudent, subjectsPrioritiesTable)
 
             val tab = new Tab {
               text = "Estudiante " + i._1
-              content = subjectsPrioritiesTable
+              content = tabVBox
             }
 
 
@@ -140,10 +154,16 @@ object GUI extends JFXApp3 {
 
             subjectsPrioritiesTable.columns ++= List(subjectsPrioritiesTableCol1, subjectsPrioritiesTableCol2)
 
+            val tabHeaderStudent = new Text {
+              text = "\n Viendo Estudiante " + i._1 + "\n" + "Desplazate usando las flechas <- y ->"
+              style = "-fx-font: bold 10pt sans-serif"
+            }
+
+            val tabVBoxStudents = new VBox(5, tabHeaderStudent, subjectsPrioritiesTable)
 
             tabs += new Tab {
               text = "Estudiante " + i._1
-              content = subjectsPrioritiesTable
+              content = tabVBoxStudents
             }
           }
 
@@ -185,7 +205,7 @@ object GUI extends JFXApp3 {
           style = "-fx-font: bold 10pt sans-serif"
         }
         val algorithmTypeLabel = new Label("Seleccione el tipo de algoritmo");
-        val comboBoxItems = List("Fuerza Bruta", "Voraz V1", "Voraz V2", "Dinamico");
+        val comboBoxItems = List("Fuerza Bruta", "Voraz", "Dinamico");
         val algorithmTypeComboBox = new ComboBox[String](comboBoxItems);
         algorithmTypeComboBox.selectionModel().select(0);
 
@@ -299,13 +319,10 @@ object GUI extends JFXApp3 {
 
             val sol = selectedStrategy match {
               case 0 => {strategyPrefix="fb";rocFB(e._1,e._2,e._3,e._4)}
-              case 1 => {strategyPrefix="v1";rocV(e._1,e._2,e._3,e._4)}
-              case 2 => {strategyPrefix="v2";rocVP(e._1,e._2,e._3,e._4)}
-              case 3 => {strategyPrefix="pd";rocPD(e._1,e._2,e._3,e._4)}
+              case 1 => {strategyPrefix="v";rocVP(e._1,e._2,e._3,e._4)}
+              case 2 => {strategyPrefix="pd";rocPD(e._1,e._2,e._3,e._4)}
               case _ => throw new Exception("That strategy does not exist")
             }
-
-            executionResultLabel.text = "Procesando...";
 
             val outputPath = selectedOutputDirLabel.text()
 
