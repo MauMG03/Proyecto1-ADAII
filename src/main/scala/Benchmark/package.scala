@@ -1,4 +1,4 @@
-import Codigo.{Asignacion, Estudiante, Materias}
+import rocFB.{Asignacion, Estudiante, Materias}
 package object Benchmark {
   type AlgoritmoRoc = (Double, Double, Materias, Vector[Estudiante]) => (Asignacion, Double)
 

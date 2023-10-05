@@ -7,11 +7,6 @@ lazy val root = (project in file("."))
     name := "Proyecto1"
   )
 
-mappings in (Compile, packageBin) += {
-  file("src/main/resources/MANIFEST.MF") -> "META-INF/MANIFEST.MF"
-}
-
-
 libraryDependencies += "org.scalafx" %% "scalafx" % "16.0.0-R24"
 
 libraryDependencies ++= {
