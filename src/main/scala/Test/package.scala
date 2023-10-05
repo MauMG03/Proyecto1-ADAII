@@ -30,14 +30,20 @@ package object Test {
     }
     if (list_sj_l.isEmpty) list_sj_l = list_sj_l :+ M(rand.nextInt(M.size))._1
 
-    var gamma_j = gamma(list_sj_l.size).toInt
-    for (m <- 0 until list_sj_l.size-1){
-      val p_jl = rand.nextInt(gamma_j+1)
+    var sizeMs_j = list_sj_l.size
+    var gamma_j = gamma(sizeMs_j).toInt
+    var pMax = gamma_j - sizeMs_j + 1
+    for (m <- 0 until sizeMs_j-1){
+      var p_jl = rand.nextInt(pMax)+1
+      if (p_jl > 5){
+        p_jl = 5
+      }
       list_p_jl = list_p_jl :+ p_jl
+      sizeMs_j -= 1
       gamma_j -= p_jl
+      pMax -= gamma_j  + sizeMs_j - 1
     }
     list_p_jl = list_p_jl :+ gamma_j
-
     list_sj_l.zip(list_p_jl)
   }
 
