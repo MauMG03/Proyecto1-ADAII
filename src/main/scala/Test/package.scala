@@ -19,7 +19,7 @@ package object Test {
 
   def makeMs_j(M:Materias):Solicitud = {
     var list_sj_l = Vector.empty[Int]
-    var list_p_jl = Vector.empty[Int]
+    var list_p_jl = Array.empty[Int]
 
     var stop = 7
     for (m <- M){
@@ -43,7 +43,17 @@ package object Test {
       gamma_j -= p_jl
       pMax -= gamma_j  + sizeMs_j - 1
     }
+
+    while (gamma_j > 5){
+      val i = rand.nextInt(list_p_jl.length)
+      if (list_p_jl(i) < 5) {
+        list_p_jl(i) = list_p_jl(i) + 1
+        gamma_j -= 1
+      }
+    }
+
     list_p_jl = list_p_jl :+ gamma_j
+
     list_sj_l.zip(list_p_jl)
   }
 
