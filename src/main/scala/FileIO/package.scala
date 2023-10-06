@@ -59,4 +59,23 @@ package object FileIO {
     }
   }
 
+  def writeTest(instancia: (Materias, Asignacion), dir: String): Unit = {
+    val k = instancia._1.size
+    val r = instancia._2.size
+    val fichero = new PrintWriter(new File(dir + "e_" + k + "_" + r + "_" + r + ".roc"))
+
+    fichero.write("" + k + "\n")
+    for (m <- instancia._1) {
+      fichero.write("" + m._1 + "," + m._2 + "\n")
+    }
+
+    fichero.write("" + r + "\n")
+    for (e <- instancia._2) {
+      fichero.write("" + e._1 + "," + e._2.size + "\n")
+      for (m <- e._2) {
+        fichero.write("" + m._1 + "," + m._2 + "\n")
+      }
+    }
+    fichero.close()
+  }
 }

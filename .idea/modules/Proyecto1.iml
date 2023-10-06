@@ -12,6 +12,43 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sbt: com.storm-enroute:scalameter-core_2.13:0.21:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.github.classgraph:classgraph:4.8.78:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.commons:commons-lang3:3.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.commons:commons-math3:3.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.jline:jline:3.10.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-base:16:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-base:16:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-controls:16:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-controls:16:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-fxml:16:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-graphics:16:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-graphics:16:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-media:16:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-media:16:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-swing:16:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-web:16:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.ow2.asm:asm:5.0.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-collection-compat_2.13:2.1.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parser-combinators_2.13:1.1.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-xml_2.13:1.2.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.13.12:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-reflect:2.13.12:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalafx:scalafx_2.13:16.0.0-R24:jar" level="project" />
+    <orderEntry type="module-library">
+      <library name="sbt: unmanaged-sources-and-docs">
+        <CLASSES />
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-fxml/16/javafx-fxml-16-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-swing/16/javafx-swing-16-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-web/16/javafx-web-16-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-fxml/16/javafx-fxml-16-sources.jar!/" />
+          <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-swing/16/javafx-swing-16-sources.jar!/" />
+          <root url="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/openjfx/javafx-web/16/javafx-web-16-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
