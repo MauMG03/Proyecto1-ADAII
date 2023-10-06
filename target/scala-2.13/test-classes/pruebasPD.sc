@@ -1,3 +1,4 @@
+import Benchmark.tiempoPromedioEjecucion
 import FileIO.{readFile, writeFile}
 import rocFB.{instTotal, rocFB}
 import rocPD._
@@ -30,6 +31,10 @@ val E = Vector(
 
 val archivo = "e_3_5_5.roc"
 val e = readFile("C:\\Users\\mauricio.munoz\\Desktop\\Univalle\\Semestre VI\\ADA II\\Proyecto 1\\Proyecto1\\src\\main\\scala\\Archivos\\Entradas\\" + archivo)
-rocFB(e._1,e._2,e._3,e._4)
-rocPD(e._1,e._2,e._3,e._4)
+
+
+val sol = rocPD(e._1,e._2,e._3,e._4)
+sol._1
+sol._2
+//tiempoPromedioEjecucion(rocPD)(e._1,e._2,e._3,e._4)
 

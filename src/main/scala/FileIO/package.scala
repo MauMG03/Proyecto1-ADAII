@@ -2,13 +2,13 @@ import java.io.{BufferedReader, File, FileReader, FileWriter, IOException, Print
 import rocFB._
 
 package object FileIO {
-  def writeFile(s:(Asignacion, Double),n:String): Unit = {
-    val fichero = new PrintWriter(new File("C:\\Users\\mauricio.munoz\\Desktop\\Univalle\\Semestre VI\\ADA II\\Proyecto 1\\Proyecto1\\src\\main\\scala\\Archivos\\Salidas\\" + n))
+  def writeFile(s: (Asignacion, Double), path: String, n: String): Unit = {
+    val fichero = new PrintWriter(new File(path + "/" + n))
 
     fichero.write("" + s._2 + "\n")
-    for(e <- s._1) {
+    for (e <- s._1) {
       fichero.write("" + e._1 + "," + e._2.size + "\n")
-      for(m <- e._2){
+      for (m <- e._2) {
         fichero.write("" + m._1 + "\n")
       }
     }

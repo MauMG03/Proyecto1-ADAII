@@ -52,20 +52,17 @@ package object rocPD {
   * Complejidad O(k)
   * */
   def reducirCupos(cupos:Vector[Int], A:Estudiante, M:Materias): Vector[Int] = {
-    var i=0
-    val l = A._2.length
-    val sortA = A._2.sortBy(_._1)
+    // map de materias de la forma Mi -> (i, mi)
+    val map = mutable.Map[Int,(Int,Int)]()
+    val auxArray = ArrayBuffer[Int]()
 
-    val asignacion = for(k <- M) yield {
-      if(i == l) 0
-      else if (k._1 == sortA(i)._1) {i += 1; 1}
-      else 0
+    for(i <- M.indices) yield{
+      map(M(i)._1) = (i,cupos(i))
+      auxArray.append(0)
     }
-
-    (for(c <- cupos.indices) yield {
-      if(asignacion(c) == 0) cupos(c)
-      else cupos(c)-1
-    }).toVector
+    for(a <- A._2){map(a._1) = (map(a._1)._1,map(a._1)._2 - 1)}
+    for(m <- map){auxArray(m._2._1) = m._2._2}
+    auxArray.toVector
   }
 
   /*
@@ -125,7 +122,6 @@ package object rocPD {
     * */
     def costRocPD(n: Int, j: Int): ArrayBuffer[ArrayBuffer[(Option[Estudiante],Option[Double])]] = {
       val matrix: ArrayBuffer[ArrayBuffer[(Option[Estudiante],Option[Double])]] = ArrayBuffer.fill(n+1, j+1)(None,None)
-
       for (i <- 0 to n) matrix(i)(0) = (None,Some(0.0))
       memoizedROC(n, j, matrix)
       matrix
