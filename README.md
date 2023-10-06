@@ -5,7 +5,12 @@
 * Juan Sebastian Getial Getial
 * Nicolas Fernando Huertas Cadavid
 
-## Instrucciones de uso
+## Archivos entregados.
+
+* Se entrega un PDF donde se describe todo el trabajo realizado.
+* Se entrega codigo fuente, los archivos de pruebas se encuentran en src/test, los archivos con los codigos de las soluciones, los generadores de prueba, la interfaz y demás se encuentran en src/main.
+
+## Instrucciones de uso.
 
 Para efectos prácticos, se obtará por ejecutar la aplicación directamente desde la interfaz de consola de sbt. Dentro de la carpeta donde se encuentra el archivo .sbt, correr el siguiente comando. Notar que es necesario tener sbt instalado https://www.scala-sbt.org/
 
